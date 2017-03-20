@@ -374,7 +374,7 @@ jqLite提供的方法：
 
 # 官方文档翻译
 ##ng功能组件
-|name|description|格式|
+|name|description|format|
 |:-----|:-----|:-----|
 |angular.lowercase|将指定的字符串转换为小写|1.7被弃用，格式为：angular.lowercase(string);|
 |angular.uppercase|将指定的字符串转换为大写|1.7被弃用angular.uppercase(string);|
