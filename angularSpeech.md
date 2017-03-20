@@ -374,7 +374,7 @@ jqLite提供的方法：
 
 # 官方文档翻译
 
-##ng功能组件
+## ng功能组件
 
 |name|description|format|
 |:-----|:-----|:-----|
@@ -405,7 +405,7 @@ jqLite提供的方法：
 |angular.element|将原始的dom元素包装成jquery对象|格式为angular.element(element);}
 |angular.module|全局的模块，任何地方都可以创建，注册和检索。所有的模块（包括第三方模块）都应该给应用程序使用这种机制注册|angular.module(name, [requires], [可配置方法]);|
 
-###angular.element
+### angular.element
 	Angular's jqLite提供了以下方法：
     addClass(),
     after(),
