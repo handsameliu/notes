@@ -376,8 +376,8 @@ jqLite提供的方法：
 ##ng功能组件
 |name|description|格式|
 |:-----|:-----|:-----|
-|angular.lowercase|将指定的字符串转换为小写|1.7被弃用，格式为：angular.lowercase(string);|1.7被弃用angular.uppercase(string);|
-|angular.uppercase|将指定的字符串转换为大写|
+|angular.lowercase|将指定的字符串转换为小写|1.7被弃用，格式为：angular.lowercase(string);|
+|angular.uppercase|将指定的字符串转换为大写|1.7被弃用angular.uppercase(string);|
 |angular.forEach|调用迭代器对obj的每一项进行迭代|格式为：angular.forEach(values,function(value,key){}|
 |angular.extend|扩展对象，可以指定多个src对象到指定的dst对象上|格式为:angular.extend(dst, src);如果想要保留原有对象，可以在第一个参数位置加一个空对象，例如angular.extend({}, object1, object2)|
 |angular.merge|深度扩展对象，同样可以指定多个src对象到指定的dst对象上|angular.merge(dst, src);|
@@ -393,19 +393,53 @@ jqLite提供的方法：
 |angular.isFunction|判断是否函数方法|格式为：angular.isFunction(value);|
 |angular.isElement|判断是否dom元素|
 |angular.copy|创建一个深度拷贝的源，应该是对象或数组|格式为angular.copy(指定的源, 复制的目标);|
-|angular.equals|判断两个值是否一样，支持值类型，正则，数组和对象|格式为|格式为：angular.equals(o1, o2); 相当于===。但在这里两个NaN是true，两个正则也是true|
+|angular.equals|判断两个值是否一样，支持值类型，正则，数组和对象|格式为：angular.equals(o1, o2); 相当于===。但在这里两个NaN是true，两个正则也是true|
 |angular.bind|函数绑定，返回一个函数调用，允许带参。这一特性也成为部分应用，有别于函数局部套用。|格式为angular.bind(上下文对象, fn, 可选prebound方法);|
 |angular.toJson|格式化为json格式的字符串输入|angular.toJson(obj, pretty可选);pretty如果设置为true,那么JSON输出将包含换行和空白。如果设置为int,JSON输出将包含许多空间/压痕。|
 |angular.fromJson|反序列化json字符串|格式为：angular.fromJson(json);|
 |angular.bootstrap|手动按需加载angular的应用|格式为angular.bootstrap(指定dom元素, 引用模块名称,可选应用程序配置对象默认false);|
 |angular.reloadWidthDebugInfo|重新加载当前应用的调试信息，优先级大于$compileProvider.debugInfoEnabled(false)|
-|angular.injector|创建一个注入对象用来检索服务和依赖注入|格式为：angular.injector(modules, [strictDi]);|格式为：angular.injector(模块名或模块列表, [strictDi]默认false);|
+|angular.injector|创建一个注入对象用来检索服务和依赖注入|格式为：angular.injector(模块名或模块列表, [strictDi]默认false);|
 |angular.element|将原始的dom元素包装成jquery对象|格式为angular.element(element);}
 |angular.module|全局的模块，任何地方都可以创建，注册和检索。所有的模块（包括第三方模块）都应该给应用程序使用这种机制注册|angular.module(name, [requires], [可配置方法]);|
 
 ###angular.element
 	Angular's jqLite提供了以下方法：
-    addClass(),after(),append(),attr(),bind(),children(),clone(),contents(),css(),data(),detach(),empty(),eq(),find(),hasClass(),html(),next(),on(),off(),one(),parent(),prepend(),prop(),ready(),remove(),removeAttr(),removeClass(),removeDate(),replaceWidth(),text(),toggleClass(),triggerHandler(),unbind(),val(),wrap().
+    addClass(),
+    after(),
+    append(),
+    attr(),
+    bind(),
+    children(),
+    clone(),
+    contents(),
+    css(),
+    data(),
+    detach(),
+    empty(),
+    eq(),
+    find(),
+    hasClass(),
+    html(),
+    next(),
+    on(),
+    off(),
+    one(),
+    parent(),
+    prepend(),
+    prop(),
+    ready(),
+    remove(),
+    removeAttr(),
+    removeClass(),
+    removeDate(),
+    replaceWidth(),
+    text(),
+    toggleClass(),
+    triggerHandler(),
+    unbind(),
+    val(),
+    wrap().
     除此之外angular还提供了以下方法：
     1.$destroy 用于拦截所有jqLite和jQuery的dom api对节点的破坏性删除。
     2.controller(name)获取当前元素或者其父辈的控制器，默认情况下检索控制器于ngController相关指令。
@@ -625,7 +659,281 @@ input[email]
 |ngChange(optional)|string|当输入的值发生改变的时候触发|
 
 input[month]
+
 	输入的月份验证和转换。尚不支持html5中月份输入的浏览器，将使用一个文本元素。在这种情况下文本必须输入一个有效的iso8601的月份格式(yyyy-MM).该模式必须始终是一个date对象，否则angular将抛出一个错误。错误的日期对象（日期的getTime()是NaN）将显示为一个空字符串。如果模式未设置为第一个月份，一个视图模型更新会将它设置为第一个月份。可以使用ngModelOptions来定义时区用于读写日期模型。默认情况下为浏览器的时区。
+    指令信息
+    	这个指令的执行优先级为0
+    使用元素
+
+```javascript
+<input type="month"
+       ng-model="string"
+       [name="string"]
+       [min="string"]
+       [max="string"]
+       [ng-min=""]
+       [ng-max=""]
+       [required="string"]
+       [ng-required="string"]
+       [ng-change="string"]>
+```
+    参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|控件的属性名称|
+|min|string|如果输入的值小于min设置的值，则触发最小验证错误。 并且输入的值必须是有效的ISO月份格式（yyyy-MM）。 您还可以在此属性内使用插值（例如，min =“{{minMonth | date：'yyyy-MM'}}”）。 注，min也会自动添加HTML5自带约束验证|
+|max(optional)|string|如果输入的值大于max设置的值，则触发验证错误。并且输入的值必须是有效的ISO月份格式（yyyy-MM）。您还可以在此属性（例如max="{{maxMonth | date:'yyyy-MM'}}"）中使用插值。注，max也会自动添加本机HTML5自带约束验证|
+|ngMin(optional)|date/string|将min设置为最小验证约束的IOS标准日期，ngMin表达式的求值结果为字符串。注,设置ngMin后不用设置min属性。|
+|ngMax(optional)|date/string|将max设置为最小验证约束的IOS标准日期，ngMax表达式的求值结果为字符串。注,设置ngMax后不用设置min属性。|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+
+input[number]
+
+	文本输入数字验证和转换，如果输入的值没有一个是有效的数字，那么需要设置错误提示。
+```
+	模型必须是数字类型的否则AngularJS将抛出一个错误。注意,字符串包含数字是不够的。有关更多信息,请参见numfmt错误文档,会给您一个模型的例子
+```
+	HTML5约束验证问题
+    在浏览器中HTML5的规范。当输入[数字]与ngModelOptions.allowInvalid并没有像预期的那样工作。如果non-number进入输入中,浏览器会将输入的值作为一个空字符串,这意味着ngModel视图/模型值和随后的范围值也将获取到的是一个空字符串。
+    指令信息
+    	这个指令的执行优先级为0
+    使用元素
+
+```javascript
+	<input type="number"
+       ng-model="string"
+       [name="string"]
+       [min="string"]
+       [max="string"]
+       [ng-min="string"]
+       [ng-max="string"]
+       [step="string"]
+       [ng-step="string"]
+       [required="string"]
+       [ng-required="string"]
+       [ng-minlength="number"]
+       [ng-maxlength="number"]
+       [pattern="string"]
+       [ng-pattern="string"]
+       [ng-change="string"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前input的名称|
+|min(optional)|string|设置最小输入数字，如果输入的数字小于设置数字会有提示|
+|max(optional)|string|设置最大输入数字，如果输入的数字大于设置数字会有提示|
+|ngMin(optional)|string|类似最小输入数字，支持的是表达式，如果输入的数字小于ngMin设置的数字，会报错，但不会出发html5自带的验证约束|
+|ngMax(optional)|string|类似最大输入数字，支持的是表达式，如果输入的数字大于ngMax设置的数字，会报错，但不会出发html5自带的验证约束|
+|step(optional)|string|如果输入的值不符合约束，可以设置步骤来验证错误|
+|ngStep(optional)|string|支持表达式。类似于step，用于设置步骤验证操作。如果输入的值不符合ngStep约束,会报错但不触发HTML5验证约束，|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngMinlength(optional)|number|设置最小的输入长度，如果输入的值小于ngMinlength设置的值则报错|
+|ngMaxlength(optional)|number|设置最大的输入长度，如果输入的值大于ngMaxlength设置的值则报错|
+|pattern(optional)|string|类似于ngPattern，但输入的值为实际的字符串，该字符串将被转化为正则表达式ngPattern指令|
+|ngPattern(optional)|string|设置pattern的值，如果ngModel捕获到的值不匹配REGEXP，那么将给出属性值，如果表达式的求值结果为一个正则表达式对象，那么可以直接使用，如果表达式的值为字符串，那么将转化为一个regexp对象（例如,“abc”将被转换成新的正则表达式(“^abc美元$”）注意:避免使用RegExp g标志,因为它会导致每个连续搜索开始在索引的搜索匹配,因此不考虑整个输入值。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+
+input[radio]
+
+	html单选按钮
+    指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+<input type="radio"
+       ng-model="string"
+       value="string"
+       [name="string"]
+       [ng-change="string"]
+       ng-value="string">
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|value|string|在ngModel被选中后获取的值，注意,只支持字符串值,即scope model需要一个字符串，当你需要使用复杂的模型(数量、对象,……)可使用ngValue|
+|ngValue|string|以属性名的形式来监听控制器的输入|
+|name(optional)|string|radio控件名称|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+
+input[range]
+```
+本机范围输入验证和转换。
+model输入的必须是一个数字。
+IE9和其他浏览器不支持一个文本输入没有任何默认值min, max和step返回范围类型。模型绑定、验证和解析数量仍然支持。
+支持范围的浏览器(Chrome,Safari,Firefox,Edge)的input[range]标签,不允许输入无效的值。这意味着:
+任何非数值值设置为(max/min)/2
+任何输入的数值小于当前最小的值,或大于当前最大值，自动将值设置为最小/最大值。
+此外,当前步骤是的权重很高,所以最近的输入值满足一个step就可以使用。)。
+这对AngularJS有以下影响:
+输入元素值应当反映当前的model的值,输入范围将绑定ngModel表达式的值,浏览器设置输入元素。例如,在下面输入< input type = "range" ng-model =”model.value”>,如果是应用程序集模型。value=null,浏览器将设置“50”的输入。AngularJS将模型设置为50,防止输入和model值不同步。
+这意味着model范围将立即被设置为50 ngModel后初始化。这也意味着一系列输入可以从来没有所需的错误。
+这不仅影响模型的变化值,但也值的min,max,step属性。当这些改变的方式会导致浏览器修改输入值时,AngularJS也将更新模型值。
+自动调整参数也意味着输入元素不能有设置其他属性要求,比如min最小值或max最大值。
+然而,step是目前只完全由Firefox实现。其他浏览器出现问题时会当成一个step，他们不能正确调整元素值,而是可能设置stepMismatch错误。如果是这样的话,AngularJS将设置步骤错误输入,并设置模型来定义。
+注意，input(type=range)与ngMax,,ngMin,ngStep,不兼容。因为他们不用设置最小和最大的属性,这意味着浏览器不会基于他们的设置自动调节输入值,并将总是假设min= 0,max = 100,step= 1。
+	指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+<input type="range"
+       ng-model="string"
+       [name="string"]
+       [min="string"]
+       [max="string"]
+       [step="string"]
+       [ng-change="string"]
+       [ng-checked="expression"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前控件的属性名|
+|min(optional)|string|设置最小验证以确保所输入的值大于最小值。可以插入。|
+|max(optional)|string|设置最大验证以确保所输入的值小于最大值。可以插入。|
+|step(optional)|string|设置step验证以确保所输入的值匹配step。可以插入。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+|ngChecked(optional)|expression|如果表达式是true,那么检查属性的元素将被设置。注意:ngChecked ngModel不应一起使用。检出用ngChecked使用。|
+
+input[text]
+	标准的HTML文本输入与AngularJS数据绑定,继承了大部分的输入元素。
+    指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+	<input type="text"
+       ng-model="string"
+       [name="string"]
+       [required="string"]
+       [ng-required="string"]
+       [ng-minlength="number"]
+       [ng-maxlength="number"]
+       [pattern="string"]
+       [ng-pattern="string"]
+       [ng-change="string"]
+       [ng-trim="boolean"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前控件的属性名|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngMinlength(optional)|number|设置最小的输入长度，如果输入的值小于ngMinlength设置的值则报错|
+|ngMaxlength(optional)|number|设置最大的输入长度，如果输入的值大于ngMinlength设置的值则报错|
+|pattern(optional)|string|类似于ngPattern，但输入的值为实际的字符串，该字符串将被转化为正则表达式ngPattern指令|
+|ngPattern(optional)|string|设置pattern的值，如果ngModel捕获到的值不匹配REGEXP，那么将给出属性值，如果表达式的求值结果为一个正则表达式对象，那么可以直接使用，如果表达式的值为字符串，那么将转化为一个regexp对象（例如,“abc”将被转换成新的正则表达式(“^abc美元$”）注意:避免使用RegExp g标志,因为它会导致每个连续搜索开始在索引的搜索匹配,因此不考虑整个输入值。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+|ngTrim(optional)|boolean|如果设置为false，AngularJS不会自动输入。将忽略此参数input(type=password),它永远不会减少输入。默认是true|
+
+input[time]
+```
+输入时间验证和转换。当浏览器还不支持HTML5的时间输入,将使用一个文本元素。在这种情况下,文本必须输入一个有效的iso - 8601的当地时间格式(HH:mm:ss),例如:14:57:00。模型必须是一个dateObject。这总是会输出一个日期对象绑定到模型的January 1, 1970,或当地new Date(1970, 0, 1, HH, mm, ss).
+模型必须是一个模型必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期为bull)将呈现为一个空字符串。
+要使用的时区来读/写日期可以定义在模型中使用ngModelOptions实例。默认情况下,这是浏览器的时区。
+	指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+<input type="time"
+       ng-model="string"
+       [name="string"]
+       [min="string"]
+       [max="string"]
+       [ng-min=""]
+       [ng-max=""]
+       [required="string"]
+       [ng-required="string"]
+       [ng-change="string"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前控件的属性名|
+|min(optional)|string|设置最小验证以确保所输入的值大于最小值。可以插入。|
+|max(optional)|string|设置最大验证以确保所输入的值小于最大值。可以插入。|
+|ngMin(optional)|string|类似最小输入数字，支持的是表达式，如果输入的数字小于ngMin设置的数字，会报错，但不会出发html5自带的验证约束|
+|ngMax(optional)|string|类似最大输入数字，支持的是表达式，如果输入的数字大于ngMax设置的数字，会报错，但不会出发html5自带的验证约束|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+
+input[url]
+	URL文本输入验证。如果内容不是一个有效的url时可以设置url验证错误信息
+    注意:input[url]使用一个正则表达式来验证url。如果你需要更严格的验证,您可以使用ng-pattern或修改内置正则验证器
+	指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+	<input type="url"
+       ng-model="string"
+       [name="string"]
+       [required="string"]
+       [ng-required="string"]
+       [ng-minlength="number"]
+       [ng-maxlength="number"]
+       [pattern="string"]
+       [ng-pattern="string"]
+       [ng-change="string"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前控件的属性名|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngMinlength(optional)|number|设置最小的输入长度，如果输入的值小于ngMinlength设置的值则报错|
+|ngMaxlength(optional)|number|设置最大的输入长度，如果输入的值大于ngMinlength设置的值则报错|
+|pattern(optional)|string|类似于ngPattern，但输入的值为实际的字符串，该字符串将被转化为正则表达式ngPattern指令|
+|ngPattern(optional)|string|设置pattern的值，如果ngModel捕获到的值不匹配REGEXP，那么将给出属性值，如果表达式的求值结果为一个正则表达式对象，那么可以直接使用，如果表达式的值为字符串，那么将转化为一个regexp对象（例如,“abc”将被转换成新的正则表达式(“^abc美元$”）注意:避免使用RegExp g标志,因为它会导致每个连续搜索开始在索引的搜索匹配,因此不考虑整个输入值。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+
+input[week] 
+```
+输入与一年中的有效星期验证和转换。浏览器还不支持HTML5周输入,将使用一个文本元素。在这种情况下,输入的文本必须在一个有效的iso - 8601周格式(yyyy-W##),例如:2013-w02。
+model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期是null)将呈现为一个空字符串。
+要使用的时区来读/写日期可以定义在model中使用ngModelOptions实例。默认情况下,这是浏览器的当前时区。
+	指令信息
+    	这个指令的执行优先级为0
+    使用元素
+```javascript
+<input type="week"
+       ng-model="string"
+       [name="string"]
+       [min="string"]
+       [max="string"]
+       [ng-min=""]
+       [ng-max=""]
+       [required="string"]
+       [ng-required="string"]
+       [ng-change="string"]>
+```
+	参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngModel|string|angular的数据绑定表达式|
+|name(optional)|string|当前控件的属性名|
+|min(optional)|string|设置最小验证以确保所输入的值大于最小值。可以插入。|
+|max(optional)|string|设置最大验证以确保所输入的值小于最大值。可以插入。|
+|ngMin(optional)|string|类似最小输入数字，支持的是表达式，如果输入的数字小于ngMin设置的数字，会报错，但不会出发html5自带的验证约束|
+|ngMax(optional)|string|类似最大输入数字，支持的是表达式，如果输入的数字大于ngMax设置的数字，会报错，但不会出发html5自带的验证约束|
+|required(optional)|string|必填项|
+|ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
+|ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
+    
+    
+    
+
     
     
 
