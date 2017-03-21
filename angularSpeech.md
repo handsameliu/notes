@@ -933,7 +933,110 @@ model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的�
 |ngRequired(optional)|string|当ngRequired表达式的求值结果为true时，向元素添加required属性和required验证约束。但使用ngRequired并不是 将值绑定到required属性上。|
 |ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
     
-    
+ngApp
+	使用该指令来自动引导(bootstrap)angularjs的应用。ngApp是指令指定的根元素的应用并且通常放置在根元素附近的页面-例如在<body>或<html>。
+    当使用ngApp时有些事情需要注意：
+    - angularjs只有一个应用，它可以被自动引导到HTML的document中。首先ngApp在document中运行，将用于定义根元素自动加载应用。运行多个应用程序在同一个HTML文档中必须使用手动angular.bootstrap引导代替它们使用。
+    - angularjs应用不能够嵌套。
+    - 不能在指令中在使用transclusion在ngApp元素上。该指令包括诸如ngif，nginclude，ngview。这种错位的APP和$rootelement，会导致动画停止运行，并使注入器无法获取外面的APP。
+    您可以指定angularjs模块，用来做为根节点模块的应用。该模块将被加载$injector时会被自动加载。它应该包含应用代码或依赖于其他模块，将包含该代码。可以查看angular.module的更多信息。
+```html
+<div ng-app="ngAppStrictDemo" ng-strict-di>
+    <div ng-controller="GoodController1">
+        I can add: {{a}} + {{b}} =  {{ a+b }}
+
+        <p>This renders because the controller does not fail to
+           instantiate, by using explicit annotation style (see
+           script.js for details)
+        </p>
+    </div>
+
+    <div ng-controller="GoodController2">
+        Name: <input ng-model="name"><br />
+        Hello, {{name}}!
+
+        <p>This renders because the controller does not fail to
+           instantiate, by using explicit annotation style
+           (see script.js for details)
+        </p>
+    </div>
+
+    <div ng-controller="BadController">
+        I can add: {{a}} + {{b}} =  {{ a+b }}
+
+        <p>The controller could not be instantiated, due to relying
+           on automatic function annotations (which are disabled in
+           strict mode). As such, the content of this section is not
+           interpolated, and there should be an error in your web console.
+        </p>
+    </div>
+</div>
+```
+```javascript
+
+
+angular.module('ngAppStrictDemo', [])
+// BadController will fail to instantiate, due to relying on automatic function annotation,
+// rather than an explicit annotation
+.controller('BadController', function($scope) {
+  $scope.a = 1;
+  $scope.b = 2;
+})
+// Unlike BadController, GoodController1 and GoodController2 will not fail to be instantiated,
+// due to using explicit annotations using the array style and $inject property, respectively.
+.controller('GoodController1', ['$scope', function($scope) {
+  $scope.a = 1;
+  $scope.b = 2;
+}])
+.controller('GoodController2', GoodController2);
+function GoodController2($scope) {
+  $scope.name = 'World';
+}
+GoodController2.$inject = ['$scope'];
+```
+```css
+div[ng-controller] {
+    margin-bottom: 1em;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid;
+    padding: .5em;
+}
+div[ng-controller^=Good] {
+    border-color: #d6e9c6;
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+div[ng-controller^=Bad] {
+    border-color: #ebccd1;
+    background-color: #f2dede;
+    color: #a94442;
+    margin-bottom: 0;
+}
+```
+Usage
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+```
+<ng-app
+  ng-app="angular.Module"
+  [ng-strict-di="boolean"]>
+...
+</ng-app>
+```
+属性为:
+```
+<ANY
+  ng-app="angular.Module"
+  [ng-strict-di="boolean"]>
+...
+</ANY>
+```
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:-----|
+|ngApp|angular.Module|可选的模块名称用于加载。|
+|ngStrictDi(optional)|boolean|如果此属性存在于app element中时，注入器将被创建在“strict-di”严格模式。这意味着，该应用程序将不能调用功能，而不使用显式注释功能(且因此不适用于缩小)，如依赖注入的方法和有用的调试信息，将协助追踪这些错误的根源。|
     
 
     
