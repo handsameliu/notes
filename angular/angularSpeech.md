@@ -875,6 +875,7 @@ input[url]
 	指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 	<input type="url"
        ng-model="string"
@@ -901,6 +902,7 @@ input[url]
 |ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
 
 input[week] 
+
 ```
 输入与一年中的有效星期验证和转换。浏览器还不支持HTML5周输入,将使用一个文本元素。在这种情况下,输入的文本必须在一个有效的iso - 8601周格式(yyyy-W##),例如:2013-w02。
 model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期是null)将呈现为一个空字符串。
@@ -973,8 +975,6 @@ ngApp
 </div>
 ```
 ```javascript
-
-
 angular.module('ngAppStrictDemo', [])
 // BadController will fail to instantiate, due to relying on automatic function annotation,
 // rather than an explicit annotation
@@ -1014,7 +1014,8 @@ div[ng-controller^=Bad] {
     margin-bottom: 0;
 }
 ```
-Usage
+
+用法
 作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
 ```
 <ng-app
@@ -1033,10 +1034,51 @@ Usage
 ```
 
 参数
+
 |Param|Type|Details|
-|:-----|:-----|:-----|
+|:-----|:-----|:----|
 |ngApp|angular.Module|可选的模块名称用于加载。|
 |ngStrictDi(optional)|boolean|如果此属性存在于app element中时，注入器将被创建在“strict-di”严格模式。这意味着，该应用程序将不能调用功能，而不使用显式注释功能(且因此不适用于缩小)，如依赖注入的方法和有用的调试信息，将协助追踪这些错误的根源。|
+
+ngBind
+
+	该属性ngbind告诉angularjs在html元素中替换文字内容中指定的表达式的值，当表达式的值的变化时更新文本内容。
+    通常，您不使用直接ngbind，而是你使用双重标记的大括号{{}}表达，这样显示的比较直观。
+    优先使用ngbind代替{{表达式}}，在页面在原始状态时angularjs会找到并编译它，但是模版会暂时在浏览器显示。因为ngbind是元素属性，当页面被加载时，用户看不到数据绑定。（译者：如果数据量过大页面会暂时显示出表达式，而后显示正确的值）
+    该问题的替换解决方法是使用ngcloak指令。
+    
+    指令信息
+    	这个指令的执行优先级为0
+        
+用法
+属性为
+
+```javascript
+<ANY
+  ng-bind="expression">
+...
+</ANY>
+```
+CSS类
+```javascript
+<ANY class="ng-bind: expression;"> ... </ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngbind|表达式|表达式|
+
+ngBindHtml
+
+	以安全方式在对应的HTML元素中获取表达式的值。
+    
+    
+    
+    
+    
+    
     
 
     
