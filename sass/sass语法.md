@@ -195,7 +195,7 @@ complement(#cc3)   //#33c
 	@if可以用来判断：
 ``` css
 p{
-	@if 1+1==2{border:1px solid;}
+    @if 1+1==2{border:1px solid;}
     @if 5<3 {border:2px dotted;}
 }
 ```
@@ -210,7 +210,7 @@ p{
 ### 循环语句
 	sass支持for循环
 ``` css
-	@for $i from 1 to 10{
+    @for $i from 1 to 10{
     	.border:#{$i}px solid blue;
     }
 ```
