@@ -454,7 +454,7 @@ jqLite提供的方法：
     5.isolateScope() 检索一个隔离范围，如果有一个隔离范围附加到了当前元素上，那么应该使用getter元素包含一个指令，启动一个新的分离范围。调用这个scope时返回的总是元素的non-isolate。
     6.inheritedDate() 方法等同于data(),但是走的是dom，直到找到一个值或者父元素。
 
-##directive
+## directive
 a
 	
     修改默认行为的html标签，默认操作时防止href属性是空的。动态创建href属性的标签，详见ngHref指令。这个指令的优先级为0。
@@ -486,6 +486,7 @@ form
     动画
     	动画是在ngForm中任何相关的css类被添加和删除时出发。这些类有：ng-pristine，ng-dirty，ng-invaled和ng-valid以及任何表单验证。动画在ngClass，ngForm类似于他们的工作方式类似于css的转换关键帧和js动画。
     	下面的事例显示了一个简单的方法，这种方法利用css转换风格表单元素，呈现为无效后验证：
+        
 ```css
 //be sure to include ngAnimate as a module to hook into more
 //advanced animations
@@ -498,10 +499,12 @@ form
   color:white;
 }
 ```
+
     指令信息
     	这个指令的执行优先级为0
 	使用
     	元素
+        
 ```html
 <form
   [name="string"]>
@@ -708,9 +711,11 @@ input[month]
 input[number]
 
 	文本输入数字验证和转换，如果输入的值没有一个是有效的数字，那么需要设置错误提示。
+    
 ```
 	模型必须是数字类型的否则AngularJS将抛出一个错误。注意,字符串包含数字是不够的。有关更多信息,请参见numfmt错误文档,会给您一个模型的例子
 ```
+
 	HTML5约束验证问题
     在浏览器中HTML5的规范。当输入[数字]与ngModelOptions.allowInvalid并没有像预期的那样工作。如果non-number进入输入中,浏览器会将输入的值作为一个空字符串,这意味着ngModel视图/模型值和随后的范围值也将获取到的是一个空字符串。
     指令信息
@@ -860,10 +865,9 @@ input[text]
 
 input[time]
 
-```
-输入时间验证和转换。当浏览器还不支持HTML5的时间输入,将使用一个文本元素。在这种情况下,文本必须输入一个有效的iso - 8601的当地时间格式(HH:mm:ss),例如:14:57:00。模型必须是一个dateObject。这总是会输出一个日期对象绑定到模型的January 1, 1970,或当地new Date(1970, 0, 1, HH, mm, ss).
-模型必须是一个模型必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期为bull)将呈现为一个空字符串。
-要使用的时区来读/写日期可以定义在模型中使用ngModelOptions实例。默认情况下,这是浏览器的时区。
+	输入时间验证和转换。当浏览器还不支持HTML5的时间输入,将使用一个文本元素。在这种情况下,文本必须输入一个有效的iso - 8601的当地时间格式(HH:mm:ss),例如:14:57:00。模型必须是一个dateObject。这总是会输出一个日期对象绑定到模型的January 1, 1970,或当地new Date(1970, 0, 1, HH, mm, ss).
+	模型必须是一个模型必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期为bull)将呈现为一个空字符串。
+	要使用的时区来读/写日期可以定义在模型中使用ngModelOptions实例。默认情况下,这是浏览器的时区。
 	指令信息
     	这个指令的执行优先级为0
     使用元素
@@ -929,10 +933,9 @@ input[url]
 
 input[week] 
 
-```
-输入与一年中的有效星期验证和转换。浏览器还不支持HTML5周输入,将使用一个文本元素。在这种情况下,输入的文本必须在一个有效的iso - 8601周格式(yyyy-W##),例如:2013-w02。
-model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期是null)将呈现为一个空字符串。
-要使用的时区来读/写日期可以定义在model中使用ngModelOptions实例。默认情况下,这是浏览器的当前时区。
+	输入与一年中的有效星期验证和转换。浏览器还不支持HTML5周输入,将使用一个文本元素。在这种情况下,输入的文本必须在一个有效的iso - 8601周格式(yyyy-W##),例如:2013-w02。
+	model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期是null)将呈现为一个空字符串。
+	要使用的时区来读/写日期可以定义在model中使用ngModelOptions实例。默认情况下,这是浏览器的当前时区。
 	指令信息
     	这个指令的执行优先级为0
     使用元素
