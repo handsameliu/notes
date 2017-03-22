@@ -1,5 +1,5 @@
 # **Angular**
-```
+
 ## 有哪些框架规范？
   - 常见的框架MVC 和 MVVM
   - MVC  M model 数据模型层 ，用来存放数据的 
@@ -11,9 +11,9 @@
             VM  viewModel 视图模型 ，业务逻辑主要部署在这里
             angularJS(viewModel可以认为是$scope)
             vue
-```
 
 ## 什么是 AngularJS？
+
 ```
     AngularJS 使得开发现代的单一页面应用程序（SPAs：Single Page Applications）变得更加容易。
     AngularJS 把应用程序数据绑定到 HTML 元素。
@@ -38,6 +38,7 @@
 ```
 
 ## angular两个基本概念
+
 ```
     1. 指令 （内置指令）
         1)在我们的html结构中以 ng- 或者 data-ng- 为前缀的都是我们angular的内置指令
@@ -215,6 +216,7 @@
 ```
 
 ## angular自定义指令
+
 ```
     页面使用时要用 - 将自定义指令的驼峰命名改变 liuweiDr --> liuwei-dr
     <!--E-->
@@ -301,6 +303,7 @@
 ```
 
 ## 解决页面加载时闪烁的问题
+
 ```
     - ng-bind 只能跟一个属性    {{}}是ng-bind的缩写，
     - ng-bind-template 可以跟多个属性
@@ -317,6 +320,7 @@
 ```
 
 ## angular.element
+
 ```
 将DOM元素或者html字符串，包装成一个jquery对象，是angular自带的方法（jqLite）
 格式：angular.element(element);
@@ -516,6 +520,7 @@ input
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```html
 <input
   ng-model="string"
@@ -549,6 +554,7 @@ input[checkbox] -input in nodule ng
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```css
 <input type="checkbox"
        ng-model="string"
@@ -573,6 +579,7 @@ input[date]
 	指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```css
 <input type="date"
        ng-model="string"
@@ -585,6 +592,7 @@ input[date]
        [ng-required="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -604,6 +612,7 @@ input[datetime-local]
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```css
 <input type="datetime-local"
        ng-model="string"
@@ -616,6 +625,7 @@ input[datetime-local]
        [ng-required="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -635,6 +645,7 @@ input[email]
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```css
 <input type="email"
        ng-model="string"
@@ -647,6 +658,7 @@ input[email]
        [ng-pattern="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -679,6 +691,7 @@ input[month]
        [ng-required="string"]
        [ng-change="string"]>
 ```
+
     参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -722,6 +735,7 @@ input[number]
        [ng-pattern="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -747,6 +761,7 @@ input[radio]
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 <input type="radio"
        ng-model="string"
@@ -755,6 +770,7 @@ input[radio]
        [ng-change="string"]
        ng-value="string">
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -765,6 +781,7 @@ input[radio]
 |ngChange(optional)|string|当输入因用户与输入元素的交互而更改时，将执行Angular表达式。|
 
 input[range]
+
 ```
 本机范围输入验证和转换。
 model输入的必须是一个数字。
@@ -783,6 +800,7 @@ IE9和其他浏览器不支持一个文本输入没有任何默认值min, max和
 	指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 <input type="range"
        ng-model="string"
@@ -793,6 +811,7 @@ IE9和其他浏览器不支持一个文本输入没有任何默认值min, max和
        [ng-change="string"]
        [ng-checked="expression"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -805,10 +824,12 @@ IE9和其他浏览器不支持一个文本输入没有任何默认值min, max和
 |ngChecked(optional)|expression|如果表达式是true,那么检查属性的元素将被设置。注意:ngChecked ngModel不应一起使用。检出用ngChecked使用。|
 
 input[text]
+
 	标准的HTML文本输入与AngularJS数据绑定,继承了大部分的输入元素。
     指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 	<input type="text"
        ng-model="string"
@@ -822,6 +843,7 @@ input[text]
        [ng-change="string"]
        [ng-trim="boolean"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -837,6 +859,7 @@ input[text]
 |ngTrim(optional)|boolean|如果设置为false，AngularJS不会自动输入。将忽略此参数input(type=password),它永远不会减少输入。默认是true|
 
 input[time]
+
 ```
 输入时间验证和转换。当浏览器还不支持HTML5的时间输入,将使用一个文本元素。在这种情况下,文本必须输入一个有效的iso - 8601的当地时间格式(HH:mm:ss),例如:14:57:00。模型必须是一个dateObject。这总是会输出一个日期对象绑定到模型的January 1, 1970,或当地new Date(1970, 0, 1, HH, mm, ss).
 模型必须是一个模型必须是一个dateObject,否则AngularJS将抛出一个错误。无效的日期对象(取得时间的日期为bull)将呈现为一个空字符串。
@@ -844,6 +867,7 @@ input[time]
 	指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 <input type="time"
        ng-model="string"
@@ -856,6 +880,7 @@ input[time]
        [ng-required="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -888,6 +913,7 @@ input[url]
        [ng-pattern="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -910,6 +936,7 @@ model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的�
 	指令信息
     	这个指令的执行优先级为0
     使用元素
+    
 ```javascript
 <input type="week"
        ng-model="string"
@@ -922,6 +949,7 @@ model必须是一个dateObject,否则AngularJS将抛出一个错误。无效的�
        [ng-required="string"]
        [ng-change="string"]>
 ```
+
 	参数
 |Param|Type|Details|
 |:-----|:-----|:-----|
@@ -942,6 +970,7 @@ ngApp
     - angularjs应用不能够嵌套。
     - 不能在指令中在使用transclusion在ngApp元素上。该指令包括诸如ngif，nginclude，ngview。这种错位的APP和$rootelement，会导致动画停止运行，并使注入器无法获取外面的APP。
     您可以指定angularjs模块，用来做为根节点模块的应用。该模块将被加载$injector时会被自动加载。它应该包含应用代码或依赖于其他模块，将包含该代码。可以查看angular.module的更多信息。
+    
 ```html
 <div ng-app="ngAppStrictDemo" ng-strict-di>
     <div ng-controller="GoodController1">
@@ -974,6 +1003,7 @@ ngApp
     </div>
 </div>
 ```
+
 ```javascript
 angular.module('ngAppStrictDemo', [])
 // BadController will fail to instantiate, due to relying on automatic function annotation,
@@ -994,6 +1024,7 @@ function GoodController2($scope) {
 }
 GoodController2.$inject = ['$scope'];
 ```
+
 ```css
 div[ng-controller] {
     margin-bottom: 1em;
@@ -1017,6 +1048,7 @@ div[ng-controller^=Bad] {
 
 用法
 作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+
 ```
 <ng-app
   ng-app="angular.Module"
@@ -1024,7 +1056,9 @@ div[ng-controller^=Bad] {
 ...
 </ng-app>
 ```
+
 属性为:
+
 ```
 <ANY
   ng-app="angular.Module"
@@ -1059,6 +1093,7 @@ ngBind
 ...
 </ANY>
 ```
+
 CSS类
 ```javascript
 <ANY class="ng-bind: expression;"> ... </ANY>
