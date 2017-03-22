@@ -1072,17 +1072,144 @@ CSS类
 
 ngBindHtml
 
-	以安全方式在对应的HTML元素中获取表达式的值。
+	指令是通一个安全的方式将内容绑定到 HTML 元素上。默认情况下，所得到的HTML内容通过$sanitize服务使用。利用这个功能，确保$sanitize可用，诸如，通过包括ngSanitize模块依存关系(没有核心的angularjs)。为了使用ngsanitize在模块的依赖关系，需要在应用中引入 "angular-santize.js" 模块，使用 ngSanitize 函数来检测代码的安全性。当你想让 AngularJS 在你的应用中写入 HTML，你就需要去通过这个检测一些危险代码。
+    你也可以回避你所知道的正确的值。为此，结合需明确信任值$sce.trustashtml。
+    注：如果$sanitize服务是不可用的和绑定值是不可信的，你也会有例外(代替使用。)
     
-    
-    
-    
-    
-    
-    
+    指令信息
+    	这个指令的执行优先级为0
+用法
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
 
+```javascript
+<ng-bind-html
+  ng-bind-html="expression">
+...
+</ng-bind-html>
+```
+
+属性为：
+
+```javascript
+<ANY
+  ng-bind-html="expression">
+...
+</ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngBindHtml|表达式|表达式|
+
+ngBindTemplate
+
+	ngbindtemplate指令将指定该元素文本内容中的内插模板ngbindtemplate属性。不像ngbind，ngbindtemplate可以包含多个表达式{{}}。这个指令是不必要的，因为某些HTML元素(比如title和option)可以不包含span元素
     
+    指令信息
+    	这个指令的执行优先级为0
+用法
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+
+```javascript
+<ng-bind-template
+  ng-bind-template="string">
+...
+</ng-bind-template>
+```
+
+属性为：
+
+```javascript
+<ANY
+  ng-bind-template="string">
+...
+</ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngBindHtml|表达式|模版的形式为{{表达式}}|
+
+ngBlur
+
+	指定html元素时区焦点事件
+    当事件被激活的时候目标元素已经时区了焦点
+    （译：用于告诉 AngularJS HTML 元素在失去焦点时需要执行的表达式）
+    注：由于事件同步执行DOM操作期间(例如去除聚焦输入)，执行使用angularjs表达试。如果scope.$evalasync事件出发过程中来确保一致的状态。
     
+    指令信息
+    	这个指令的执行优先级为0
+用法
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+
+```javascript
+<ng-blur
+  ng-blur="expression">
+...
+</ng-blur>
+```
+
+属性为：
+
+```javascript
+<window, input, select, textarea, a
+  ng-blur="expression">
+...
+</window, input, select, textarea, a>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngBlur|表达式|默认表达式在模版的显示形式为{{表达式}}|
+
+ngChange
+
+	当用户更改输入时，计算给定表达式。与JavaScript的onchange事件不同在于只有触发器才能改变(通常，当用户离开表单元素或按下return键)。
+    （菜鸟教程：
+    ng-change 指令用于告诉 AngularJS 在 HTML 元素值改变时需要执行的操作。
+    ng-change 指令需要搭配 ng-model 指令使用。
+    AngularJS ng-change 指令指令不会覆盖原生的 onchange 事件, 如果触发该事件，ng-change 表达式与原生的 onchange 事件都会执行。
+    ng-change 事件在值的每次改变时触发，它不需要等待一个完成的修改过程，或等待失去焦点的动作。
+    ng-change 事件只针对输入框值的真实修改，而不是通过 JavaScript 来修改。）
+    更改时，该ngChange表达式只计算输入的新值。
+    它不会被计算：
+    	- 如果当前值返回给$parsers解析，通道不会改变
+    	- 如果输入的值时一个无效的，因为该model将为空
+    	- 如果model是以编程方式更改的，而不是通过对输入值的更改
+	注意，该指令要求ngModel存在。
+    指令信息
+    	这个指令的执行优先级为0
+用法
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+
+```javascript
+	<ng-change
+      ng-change="expression">
+    ...
+    </ng-change>
+```
+
+属性为
+
+```javascript
+<input
+  ng-change="expression">
+...
+</input>
+```
+
+   参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngChange|表达式|要计算的表达式|
+
 
 
 
