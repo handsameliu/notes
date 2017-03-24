@@ -128,7 +128,85 @@ console.log('server started on localhost:3000; press ctrl-c to terminate...');
 
 ## 第三章 省时省力的Express
 
-- 脚手架：脚手架并不是一个新的想法
+- 脚手架：脚手架并不是一个新的想法，但很多人（包括我自己）都是荣国ruby才接触到这个概念的。这个想法很简单：大多数项目都需要一定数量的"套路化"代码，那么久创建一个通用的项目骨架，每次开始新项目时，只需复制这个骨架，或者或是模版。RoR把这个概念向前推进了异步，他提供了一个可以自动生成脚手架的程序。相对于从一堆模版中做出选择，这种方式的有点事可以生成更复杂的框架。express借鉴了ror的这一个做法，提供了一个生成脚手架的工具，从而可以让你开始一个新的express项目（可配合其他模版语言一起使用）。
+- npm在package.json文件中管理项目的依赖项以及项目的元数据。可以通过运行npm init来创建。他会问一系列的问题，然后生成一个package.json文件帮助管理包文件。
+    - 如果项目中package.json文件中没有指定存储库的URL地址，以及一个非空的README.md文件，name每次运行npm时都会提示警告。
+- 第一步 安装express。运行 npm install --save express .
+    - 运行npm install会把指定名称的包安装到node_modules目录中。--save指的是会写入到package.json中。由于node_modules随时都可以用npm重新生成，所以不用把这个目录也保存到代码库中。可以创建.gitignore文件来避免把node_modules加入到代码库中
+```json
+# ignore packages installed by npm
+node_modules
+
+# put any other files you don't want to check in here,
+# such as .DS_Store(OSX),*.bak,etc.
+```
+
+接下来可以创建app.js或server.js(学习的例子一般都是app.js,目前公司是server.js)
+
+```javascript
+var express = require('express');
+var app = express();
+app.set('port',process.env.PORT||3000);
+//定制404页面
+app.use(function(req,res){
+    res.type('text/plain');
+    res.status('404');
+    res.send('404 - Not Fount');
+});
+//定制500页面
+app.use(function(req,res){
+    res.type('text/plain');
+    res.status('500');
+    res.send('500 - Server Error');
+});
+app.listen(app.get('port'),function(){
+    console.log('Express started on http://localhost:'+app.get('port')+';press Ctrl-C to terminate.');
+});
+```
+ > (书的作者认为项目中主文件名称应该是和项目名称一致的，但大多数情况下express的脚手架生成器会建议你把主文件命名为app.js（或者有时是index.js或server.js）这样是没有什么道理的。因为凡是曾在编辑器里见过一堆index.html标签的人都会立刻明白这样做的好处。`npm init默认是用index.js`，如果要使用其他的主文件名，要记得修改package.json文件中的main属性。)
+ 
+- 到这里目前是有了一个express服务器，但是启动后会失望，因为没有任何的路由信息，所以他会返回一个404页面，表示你访问的页面不存在。
+> 注意我们制定端口的方式：app.set(port,process.env.PORT || 3000)。这样我们可以额在启动服务器钱通过设置环境变量覆盖端口。（不同环境下的端口 如测试，开发，生产）。如果发现运行例子时发现他监听的并不是3000端口，检查一下是否设置了环境变量PORT。
+- 我们来给首页和关于页面加上路由。在404处理器之前加上两个新路由。
+```javascript
+app.get('/',function(){
+    res.type('text/plain');
+    res.send('Meadowlark Travel');
+});
+app.get('/about',function(){
+    res.type('text/plain');
+    res.send('About Meadowlark Travel');
+});
+app.use(function(req,res,next){
+    res.type('text/plain');
+    res.status(404);
+    res.send('404 Not Found');
+});
+```
+- app.get是我们添加路由的方法
+    - 在express文档中写的是app.VERB。这并不意味着存在一个叫VERB的方法，他是用来只带HTTP动词的（最常见的是get和post）这个方法有两个参数：一个路径和一个函数。
+    - 路由就是这个路径定义的。app.VERB帮我们做了很多工作：他默认忽略了大小写或反斜杠，并且在进行匹配时也不考虑查询字符串。
+    - 路由匹配上之后就会调用你提供的函数,并把请求和相应对象作为参数传给这个函数。第六章会详细介绍。现在只返回状态码为200的普通文本（express默认的状态为200，不用显示指定）。
+    - 这次试用的不是node的res.end，而是换成了express的扩展res.send。我们还用res.set和res.status替换了node的res.writehead.express还提供了res.type方法，可以方便的设置响应头Content-Type。尽管可以使用node自带的res.writehead和res.end,但也没有必要推荐使用了。
+- 我们刚才指定404和500页面的处理和对普通页面的处理应有所区别：用的不是app.get，而是app.use。`app.use是express添加中间件的一种方法`。我们会在第十章深入探讨中间件，现在可以把它看做处理所有没有路由匹配路径的处理器。
+- 这里涉及一个非常重要的知识点：`在express中，路由和中间件的添加顺序直观重要`。如果我们把404处理器放在所有路由上面就，那首页和关于页面就不能用了，访问这些url得到的都是404.现在我们的路由相当简单，但其实他们还能支持通配符，这回导致顺序上的问题。
+    - 比如，要给关于页面添加子页面，比如/about/contact和/about/directions会怎么样？？
+```javascript
+app.get('/about*',function(req,res){
+    //发送内容....
+});
+app.get('/about/contact',function(req,res){
+    //发送内容....
+});
+app.get('/about/directions',function(req,res){
+    //发送内容....
+});
+```
+- 本例中的两个路由将永远都无法匹配到，因为第一个处理器的路径中用了通配符：/about*
+- express可以根据毁掉函数中参数的个数区分404和500处理器。第10章和第12章会详细介绍。
+
+
+
 
     
 
