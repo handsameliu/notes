@@ -1,4 +1,4 @@
-# **Angular**
+﻿# **Angular**
 
 ## 有哪些框架规范？
   - 常见的框架MVC 和 MVVM
@@ -1247,6 +1247,459 @@ ngChange
 |Param|Type|Details|
 |:-----|:-----|:----|
 |ngChange|表达式|要计算的表达式|
+
+
+> 吐槽：angular4都除了，还在翻译1.5.8的版本。。。。
+
+ngChecked
+
+    如果表达式是选中的，那么给元素设置选中属性。
+    不要将此命令和ngModel一起使用，会导致错误发生。
+    特定的指令检查是必要的，因为我们不能用checked属性。
+    指令信息
+    	这个指令的执行优先级为100
+    	
+用法：
+属性为：
+```html
+<INPUT
+  ng-checked="expression">
+...
+</INPUT>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngChecked|表达式|如果表达式的结果是true，那么该元素将被设置为选中状态|
+
+ngClass
+
+    该ngClass指令允许动态地通过数据绑定表达式来设置HTML元素的CSS类，它包含要添加的所有类。
+    该指令在三种不同的方式下运作，具体取决于三种类型的表达式的计算结果：
+        1.如果表达式的计算结果为一个字符串，该字符串中的一个或多个类名应用空格分隔开。
+        2.如果表达式的计算结果为对象，那么对象键值对结果为true的键才是类名
+        3.如果表达式的计算结果为一个数组，数组的每个元素应为要么是字符串要么是对象。这意味着可以在数组中字符串和对象混合在一起来控制更多的CSS类。
+    如果已经设置了一个特定类，该指令不会重复添加相同类名。
+    当表达式计算后js开始操作时，会先更改，删除以前添加的类，然后是添加新的类。
+
+已知的问题
+
+ > 在同一个元素使用ngClass指令时，你不应该使用插入值类的属性（js变量）
+ 
+用法：
+属性：
+```html
+<ANY
+  ng-class="expression">
+...
+</ANY>
+```
+
+css类的方式
+
+```html
+<ANY class="ng-class: expression;"> ... </ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngClass|表达式|计算表达式。 结果可以是一个字符串，值为空格分隔的类名、数组或类名的map为布尔值。在map的情况下， truthy值的属性将添加到元素的css类中|
+
+动画效果
+
+|Animation|Occurs|
+|:-----|:-----|
+|addClass|给当前元素添加类名|
+|removeClass|删除当前元素的指定类名|
+
+ngClassEven
+
+    用于配合ngClass指令工作的ngClassOdd和ngClassEven，需要结合ngRepeat并对其执行效果奇(偶)行操作
+    这一指令只应用在ngRepeat范围内。
+    指令信息
+    	这个指令的执行优先级为0
+
+用法：
+属性为：
+
+```html
+<ANY
+  ng-class-even="expression">
+...
+</ANY>
+```
+
+css类的方式
+
+```html
+<ANY class="ng-class-even: expression;"> ... </ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngClassEven|表达式|计算表达式。 结果可以是一个字符串，值为空格分隔的类名、数组或类名的map为布尔值。在map的情况下， truthy值的属性将添加到元素的css类中|
+
+ngClassOdd
+
+    用于配合ngClass指令工作的ngClassOdd和ngClassEven，需要结合ngRepeat并对其执行效果奇(偶)行操作
+    这一指令只应用在ngRepeat范围内。
+    指令信息
+    	这个指令的执行优先级为0
+    	
+用法：
+属性为：
+
+```html
+<ANY
+  ng-class-odd="expression">
+...
+</ANY>
+```
+
+css类的方式
+
+```html
+<ANY class="ng-class-odd: expression;"> ... </ANY>
+```
+
+参数
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngClassOdd|表达式|计算表达式。 结果可以是一个字符串，值为空格分隔的类名、数组或类名的map为布尔值。在map的情况下， truthy值的属性将添加到元素的css类中|   
+
+ngClick
+
+    该ngClick指令允许您指定单击一个元素的自定义行为。
+    指令信息
+    	这个指令的执行优先级为0
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。
+```html
+<ng-click
+  ng-click="expression">
+...
+</ng-click>
+```
+
+属性为：
+
+```html
+<ANY
+  ng-click="expression">
+...
+</ANY>
+```
+
+参数：
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngClick|表达式|单击时计算表达式，（需要包含参数$event）|
+
+ngCloak
+
+    该ngCloak指令是用来防止AngularJS html模板被某些浏览器显示原始(编译)窗体应用程序加载时。使用此 指令，避免html不良模板造成的显示闪烁。
+    此指令可以被应用到元素，但首选的用法是应用到小组件上。页面的多个ngCloak会逐渐呈现浏览器视图效果。
+    ngCloak在与下面的css规则嵌入在angular.js和angular.min.js合作工作。在CSP模式下请添加angular-csp.css。到您的html文件中(详见ngCsp)
+```css
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+```
+    当css是由浏览器加载期间，包括子元素在内的所有html元素标记ngCloak指令的都会隐藏。当AngularJS时遇到此指令时会在编译模板元素中删除ngCloak属性，显示已编译的元素。
+    为获得最佳结果angular.js脚本必须在html的head部分中加载文件，或者css规则必须包含在外部样式表中。
+    指令信息
+    	这个指令的执行优先级为0
+    	
+用法：
+属性方式：
+```html
+<ANY>
+...
+</ANY>
+```
+
+css类方式：
+```
+<ANY class=""> ... </ANY>
+```
+
+ngController
+
+    ngController指令是控制器类的视图。这是angular.js的一个关键，由Model-View-Controller设计模式支持。
+    angular中的MVC组件：
+        - Model 模型的属性范围；范围是可以通过绑定附加到DOM属性上。
+        - View  在视图呈现的模板(HTML和数据绑定)
+        - Controller  ngController指令指定一个控制器，该控制器包含业务视图的应用范围以外的功能和逻辑。
+    注意，您也可以将控制器通过在路由 $route 定义中声明它附加到DOM。一个常见的错误是发布控制器时再次使用相同控制器模板。这将导致附加控制器执行两次。
+    
+优先级：
+
+    此指令创建新的作用域，他的优先级是500。
+    
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-controller
+  ng-controller="expression">
+...
+</ng-controller>
+```
+
+作为属性：
+```
+<ANY
+  ng-controller="expression">
+...
+</ANY>
+```
+
+参数：
+
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngController|表达式|在当前名为$controllerProvider和一个表达式，在当前作用域的计算结果为一个构造函数。控制器实例可以由一个scope属性指定。ng-controller="as propertyName".|
+
+ngCopy
+
+    指定复制事件上的自定义行为
+    优先级：
+        它的优先级是0。
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-copy
+  ng-copy="expression">
+...
+</ng-copy>
+```
+
+作为属性：
+
+```
+<window, input, select, textarea, a
+  ng-copy="expression">
+...
+</window, input, select, textarea, a>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngCopy|表达式|要计算的表达式（参数需要包含$event）|
+
+ngCsp
+
+    AngularJS具有一些功能，当使用时，可能会发生冲突或者受制于应用的某些限制CSP(内容安全政策)规则。  
+    如果你打算使用这些规则来实现CSP那么你必须告诉AngularJS不使用这些功能。
+    当开发Google Chrome扩展或普遍的Windows应用程序之类的东西时，这是必要的。
+    CSP中的下列默认规则会影响AngularJS：
+        - 从字符串的代码使用eval()，function(string)和类似的功能来动态创建和执行是被禁止的。AngularJS利用$parse的解析服务提供一个速度增加30%的angularjs表达式。（该CSP规则可以 禁用不符合安全评估规则的CSP关键字，但它通常不推荐，因为它会削弱CSP提供的保护）。
+        - 使用内联资源，如内联元素<script>和<style>是禁止的。这样可以防止从直接注入自定义样式应用到文档中。AngularJS利用一些CSS规则(例如。ngCloak和ngHide)。当这些自定义指令工作的时候，CSP规则开始工作，阻止内敛样式时，你必须用angular-csp.css手动指向你的HTML。该CSP规则使用CSP关键字可以禁用不安全的内联，但是一般不推荐，因为它会削弱CSP提供的保护。如果你不使用ngCsp，然后AngularJS尝试使用CSP自动检测并阻碍动态代码创建字符串(例如。unsafe-eval不安全评估中未指定CSP标题)并自动停用此功能的解析服务。这是自动检测，然而CSP会触发错误被记录到控制台。
+```
+Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of
+script in the following Content Security Policy directive: "default-src 'self'". Note that
+'script-src' was not explicitly set, so 'default-src' is used as a fallback.
+拒绝评估一个JavaScript字符串,因为“unsafe-eval”是不允许的脚本在以下内容安全政策指令:“default-src‘self’”。请注意,“script-src”并不是显式地设置,所以default-src作为后备。
+```
+    
+    此错误虽然讨厌但是无害。防止错误显示，把ngCsp关联到一个HTML文档的元素，它出现tag之前加载angular.js。
+    注意：此命令仅在ng-csp 和 data-ng-csp属性上
+    您可以指定CSP的相关AngularJS停止供应ng-csp属性的值。 选项如下：
+        - no-inline-style:这将暂停AngularJS注入到DOM中的CSS样式
+        - no-unsafe-eval: 这将暂停AngularJS解析优化与安全的字符串
+        - 一个简单的ng-csp(或data-ng-csp)属性将告诉AngularJS停用两个内联样式和安全评估
+        - 这是向后兼容的angularjs版本
+        - 仅指定no-unsafe-eval，告诉AngularJS。我们不能使用eval，但我们可以插入内联样式。E.g. <body ng-csp="no-unsafe-eval">
+        - 仅将no-inline-style告诉AngularJS，我们不能使用注入的方式，但我们可以运行eval-将会不自动检查安全 E.g. <body ng-csp="no-inline-style">
+        - 仅指定no-unsafe-eval和no-inline-style告诉AngularJS，我们不能使用注入样式或使用eval，这是空的。E.g.<body ng-csp="no-inline-style;no-unsafe-eval">
+        
+优先级：
+
+    这个指令的优先级为0。
+    
+用法：
+对于属性：
+```html
+<ANY>
+...
+</ANY>
+```
+
+ngCut
+
+    指定剪切事件的自定义行为。
+    
+优先级：
+
+    这个指令的优先级为0。    
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-cut
+  ng-cut="expression">
+...
+</ng-cut>
+```
+
+对于属性：
+
+```html
+<window, input, select, textarea, a
+  ng-cut="expression">
+...
+</window, input, select, textarea, a>
+```
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngCut|表达式|剪切是计算表达式，事件对象为$event|
+
+ngDblclick
+
+    该ngDblclick指令允许您指定在dblclick事件的自定义行为
+    
+优先级：
+
+    这个指令的优先级为0。    
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html   
+<INPUT
+  ng-disabled="expression">
+...
+</INPUT>
+```
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngDblclick|表达式|如果表达式的结果是true，那么元素上的disabled将被设置|
+
+ngFocus
+
+    对焦点事件指定自定义行为
+    注意：当调用焦点事件时，input.focus()也会同步执行。AngularJS使用scope.$evalAsync执行表达式。如果激活了$apply后可以保持数据一致。
+
+优先级：
+
+    这个指令的优先级为0。    
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-focus
+  ng-focus="expression">
+...
+</ng-focus>
+```
+
+作为属性：
+```html
+<window, input, select, textarea, a
+  ng-focus="expression">
+...
+</window, input, select, textarea, a>
+```
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngFocus|表达式|获取焦点时计算表达式|
+
+ngForm
+
+    form指令的可嵌套别名。HTML不允许嵌套表单元素。这个nest形式是很有用，例如，如果一个的有效的控件的分组。
+    注意：ngForm的目的是对控件进行分组，但是却无法代替form标签的所有功能（eg:发送到服务器...）
+    
+优先级：
+
+    这个指令的优先级为0。 
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-form
+  [name="string"]>
+...
+</ng-form>
+```
+
+作为属性：
+```html
+<ANY
+  [ng-form="string"]>
+...
+</ANY>
+```    
+
+作为css类：
+```html
+<ANY class="[ng-form: string;]"> ... </ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngForm | name(可选)|字符串|表单的名称。 在这个名下指定了表单控制器的有关范围|
+
+ngHide
+
+    该ngHide指令用于显示或隐藏，HTML元素根据所提供的表达式计算控制ngHide属性。
+    元素的显示或隐藏是通过删除或添加元素的CSS属性（ngHide属性）。该.ng-hide CSS类是根据angularjs的预定义属性，（使用 !important 标记）。CSP模式请添加angular-csp.css到页面上（详见ngCsp）
+```html
+<!-- when $scope.myValue is truthy (element is hidden) -->
+<div ng-hide="myValue" class="ng-hide"></div>
+
+<!-- when $scope.myValue is falsy (element is visible) -->
+<div ng-hide="myValue"></div>
+```
+
+
+    
+    
+    
+
+    
+    
+
+
+
+    
+    
+    
+
+
+
+
+
+    
+
+
+    
+    
+
+    
+
+
+
+    
+
+
+
 
 
 
