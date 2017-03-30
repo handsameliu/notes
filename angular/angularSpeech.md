@@ -1659,7 +1659,8 @@ ngForm
 ngHide
 
     该ngHide指令用于显示或隐藏，HTML元素根据所提供的表达式计算控制ngHide属性。
-    元素的显示或隐藏是通过删除或添加元素的CSS属性（ngHide属性）。该.ng-hide CSS类是根据angularjs的预定义属性，（使用 !important 标记）。CSP模式请添加angular-csp.css到页面上（详见ngCsp）
+    元素的显示或隐藏是通过删除或添加元素的CSS属性（ngHide属性）。该.ng-hide CSS类是根据angularjs的预定义属性，（使用 !important标记）。CSP模式请添加angular-csp.css到页面上（详见ngCsp）
+    
 ```html
 <!-- when $scope.myValue is truthy (element is hidden) -->
 <div ng-hide="myValue" class="ng-hide"></div>
@@ -1667,6 +1668,411 @@ ngHide
 <!-- when $scope.myValue is falsy (element is visible) -->
 <div ng-hide="myValue"></div>
 ```
+
+    如果ngHide表达式计算结果为true，则.nghide CSS类会被添加到类属性上性使其变为隐藏的元素。结果为false时.ng-hide CSS类是从元素中移除使其显示隐藏的元素。
+    
+为什么使用 !important
+    
+    您可能想知道为什么！ 要使用!important设置.nghideCSS类。这是因为.nghide可以很容易的重写选择器。例如：任何东西都可以通过简单的更改使一个HTML列表项中将隐藏元素的样式显示可见。在处理CSS框架时，这也成为一个更大的问题。
+    通过使用!important，show和hide行为将按预期方式工作，尽管存在任何于当前CSS选择器冲突的特异性(当!important不能与任何冲突的样式一起使用)。如果开发人员选择重写样式以更改如何隐藏元素的方式然后它只是在自己的CSS代码中使用!important。
+    
+重要：.ng-hide
+
+    默认情况下，.ng-hide类样式是 display: none !important，如果你要通过ngShow/ngHide来更改隐藏行为，你可以简单的覆盖掉.ng-hide样式。请注意，选择器需要使用是正确的.ng-hide:not(.ng-hide-animate)，以应对添加额外的动画类。
+```css
+.ng-hide:not(.ng-hide-animate) {
+  /* These are just alternative ways of hiding an element */
+  display: block!important;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+```
+
+    默认情况下你什么都不需要重写,在CSS和animations将解决显示样式。
+
+关于动画的标记 nghide
+
+    在ngShow/ngHide的动画工作过程中，显示和隐藏时触发的事件指令表达式为true和false，该系统的工作原理是动画系统中出现除了ngClass还必须包括!important的标志用来覆盖显示属性元素,实际上不是在动画期间隐藏。
+```css
+/* A working example can be found at the bottom of this page. */
+.my-element.ng-hide-add, .my-element.ng-hide-remove {
+  transition: all 0.5s linear;
+}
+
+.my-element.ng-hide-add { ... }
+.my-element.ng-hide-add.ng-hide-add-active { ... }
+.my-element.ng-hide-remove { ... }
+.my-element.ng-hide-remove.ng-hide-remove-active { ... }
+```
+
+    请记住，自AngularJS 1.3版后，在动画期间不需要改变显示属性，ngAnimate将自动为您式切换处理样式。
+    
+优先级：
+
+    这个指令的优先级为0。 
+    这个指令可以是多元的。
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-hide
+  ng-hide="expression">
+...
+</ng-hide>
+```
+
+作为属性：
+```html
+<ANY
+  ng-hide="expression">
+...
+</ANY>
+```  
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngHide|表达式|如果表达式结果为true/false,那么元素的结果为隐藏/显示|
+
+动画
+|Animation|Occurs|
+|:-----|:-----|
+|addClass .ng-hide|ngHide表达式计算结果为truthy值后，就在内容设置为隐藏|
+|removeClass .ng-hide|ngHide表达式计算结果为false值后，就在内容设置为显示|
+
+ngHref
+
+    使用AngularJS标记象{{hash}}的href属性将链接到错误的URL之前如果用户单击AngularJS就有机会将{{hash}}标记替换为它本身的值。直到AngularJS替换标记链接规则将被打破,很可能会返回一个404错误。ngHref指令可以解决这个问题。
+    错误的方式来写：
+```html
+<a href="http://www.gravatar.com/avatar/{{hash}}">link1</a>
+```
+
+    正确的方式来写：
+    
+```html
+<a ng-href="http://www.gravatar.com/avatar/{{hash}}">link1</a>
+```
+
+优先级：
+
+    这个指令的优先级为99
+    
+用法：
+对于属性
+
+```html
+<A
+  ng-href="template">
+...
+</A>
+```
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngHref|模版|可以再{{}}中包含任意字符串|
+
+ngIf
+
+    该ngif指令会根据表达式的结果增加或删除掉dom中的一部分。如果表达式分配给ngif的计算结果为false那么该元素的值是从DOM中移除，否则克隆新元素重新插入到DOM元素中。
+    ngif不用于ngshow或者nghide，ngif是通过删除clone来控制dom的隐藏显示，ngshow和ngif是通过css类的display属性控制隐藏显示。一个共同的问题是，当差异显著时在dom上使用css选择器，比如:first-child 和 :last-child伪类。
+    注意，在使用ngif移除元素时，他会破坏当前作用域，在元素恢复时会创建新的作用域。在当前作用域内使用ngif会使用原型继承继承他的父作用域。一个重要的含义是，当ngmodel绑定到ngif作用域中时他会通过javascript包含父作用域。在这种情况下所做的任何修改 变量在子范围内将覆盖(隐藏)的父作用域中的值。
+    此外，ngif重新创建元素并使用它们的编译状态。此行为的示例如果一个元素的class属性直接修改编译后，使用类似jQuery的addClass()方法，稍后将被删除的元素。在ngif时，重新创建元素并添加丢失的类，因为原始编译状态用于生成元素。
+    此外，您还可以通过ngAnimate模块提供动画动态进入和离开的效果。
+    
+优先级：
+
+    此指令会创建新的作用域。
+    此指令的优先级为600.
+    此指令是多元的。
+    
+用法：
+作为属性：
+```html
+<ANY
+  ng-if="expression">
+...
+</ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngIf|表达式|如果表达式的值时false，那么就从dom中删除元素，如果是true，那么会复制一个副本添加到dom中|
+
+动画
+|Animation|Occurs|
+|:-----|:-----|
+|enter|只是ngif内容更改后，将创建一个新的DOM元素并注入ngif所在容器|
+|leave|ngif容器从dom中移除|
+
+ngInclude
+
+    拿到并编译一个外部HTML片段。
+    默认情况下，模板URL仅限于相同的域和协议下的申请文件。这是通过调用$sce.getTrustedResourceUrl实现。加载来自其他域的模板或协议您可以加入白名单或包装他们是值成信赖的值。
+    此外，浏览器的同源策略与源交叉资源共享(CORS)政策可能会进一步限制能否成功加载模板。例如：ngInclude 不会在所有浏览器和跨域请求工作 file:// 只在某些浏览器中访问。
+    
+优先级：
+
+    此指令会创建新的作用域。
+    此指令的优先级为400。
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-include
+  src="string"
+  [onload="string"]
+  [autoscroll="string"]>
+...
+</ng-include>
+```
+
+作为属性：
+```html
+<ANY
+  ng-include="string"
+  [onload="string"]
+  [autoscroll="string"]>
+...
+</ANY>
+```
+
+作为class类
+```html
+<ANY class="ng-include: string; [onload: string;] [autoscroll: string;]"> ... </ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngInclude/src |string|AngularJS计算为URL的表达式。如果源字符串是常量，请确保你把它包在单引号中|
+|onload(optional)|string|当加载新页面时，会计算新的表达式.`注：当在IE11中加载使用SVG元素时，浏览器将尝试在窗口元素调用函数名称，通常引发"未定义函数"的错误。要解决此问题，您可以使用数据onload=或匹配不同形式onload`|
+|autoscroll(optional)|string|ngInclude是否应调用$anchorScroll在加载内容后滚动视图|
+
+事件
+$includeContentRequested
+每次发出ngInclude内容请求。
+type：emit
+目标：
+ngInclude作用域范围内。
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|angularEvent|object|合成事件对象|
+|src|string|要加载的URL内容|
+
+$includeContentLoaded
+每次发出ngInclude内容都会重新加载
+
+Type:
+emit
+
+Target：
+当前ngInclude范围内
+
+参数
+|Param|Type|Details|
+|:-----|:-----|:----|
+|angularEvent|object|合成事件对象|
+|src|string|要加载的URL内容|
+
+$includeContentError
+
+模板时发出HTTP请求生成一个错误响应(status < 200 || status > 299)
+
+type:
+emit
+
+Target:
+当前ngInclude范围内
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|angularEvent|object|合成事件对象|
+|src|string|要加载的URL内容|
+
+Animations
+|Animation|Occurs|
+|:-----|:-----|
+|enter|当表达式改变时会包含一个新的|
+|leave|当表达式改变时会回到旧的状态|
+
+进入和离开动画同时发生的。
+
+ngInit
+
+    该ngInit指令允许您初始化当前作用域中的表达式。
+    `此指令可以被滥用，不需要大量的逻辑添加到您的模板。只有少数适当ngInit的使用，如特殊性质的ngRepeat，如以下示例所示，通过注入数据服务器端脚本。除了这些少数情况下，您应该使用控制器而不是ngInit上的初始化值范围。`
+    注意：如果你有ngInit转让以及一个过滤器，请确定你有括号，以确保正确的运算符优先级：
+    ```html
+    <div ng-init="test1 = ($index | toString)"></div>
+    ```
+    
+优先级
+    此指令的优先级为450
+    
+用法：
+作为属性：
+```html
+<ANY
+  ng-init="expression">
+...
+</ANY>
+```
+
+作为css类
+```html
+<ANY class="ng-init: expression;"> ... </ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngInit|表达式|计算初始化表达式|
+
+ngJq
+
+    强制使用angular.element指令库。这应该是在窗口下用于强制或者jqLite 留ng-jq空白或设置jquery的名称变量。
+    从AngularJS寻找这个指令后加载时(不等待DOMContentLoaded事件)，它必须放在angular脚本之前的第一个元素加载。 此外，只有ng-jq的第一个实例将被使用,所有其他被忽略。
+
+优先级
+    此指令的优先级为0
+    
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-jq
+  [ng-jq="string"]>
+...
+</ng-jq>
+```
+
+作为属性：
+```html
+<ANY
+  [ng-jq="string"]>
+...
+</ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngJq(optional)|string|库的名称根据window用来angular.element|
+
+ngKeydown
+
+    keydown事件上指定的自定义行为
+    
+优先级
+    此指令的优先级为0
+   
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-keydown
+  ng-keydown="expression">
+...
+</ng-keydown>
+```
+
+作为属性
+
+```html
+<ANY
+  ng-keydown="expression">
+...
+</ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngKeydown|表达式|按下时计算表达式（事件对象是可看作$event，可以询问号码，交替键等）|
+
+ngKeypress
+
+    keypress 事件上指定的自定义行为
+    
+优先级
+    此指令的优先级为0
+   
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-keypress
+  ng-keypress="expression">
+...
+</ng-keypress>
+```
+
+作为属性
+
+```html
+<ANY
+  ng-keypress="expression">
+...
+</ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngKeypress|表达式|按键时计算表达式（事件对象是可看作$event，可以询问号码，交替键等）|
+
+ngKeyup
+
+    ngKeyup 事件上指定的自定义行为
+    
+优先级
+    此指令的优先级为0
+   
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-keyup
+  ng-keyup="expression">
+...
+</ng-keyup>
+```
+
+作为属性
+
+```html
+<ANY
+  ng-keyup="expression">
+...
+</ANY>
+```
+
+参数：
+|Param|Type|Details|
+|:-----|:-----|:----|
+|ngKeyup|表达式|按键放开抬起时计算表达式（事件对象是可看作$event，可以询问号码，交替键等）|
+
+ngList
+
+    文本之间进行转换的输入分隔的字符串和一个字符串的数组。默认分隔符后面跟空格，相当于ng-list=", "。您可以指定自定义 分隔符为ngList属性的值，例如ng-list=" | ".
+    指令的行为是收到ngTrim特性的影响。
+        - 
+    
+    
+    
+
+
+    
+
+
+
+
+
+
+
 
 
     
