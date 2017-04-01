@@ -2087,6 +2087,115 @@ ngList
 |:-----|:-----|:----|
 |ngList(optional)|string|应使用的可选分隔符拆分|
 
+ngMaxlength
+
+	ngMaxlength是maxlength验证器添加到ngModel。这是最经常用于基于文本的输入控件，但也可以应用到自定义文本控件上。
+	如果该ngModel，设置了错误的maxlength验证程序。如果ngModel.$viewValue的值长于AngularJS中给出的表达式计算后得到的整数ngMaxlength属性值。
+
+```
+注：本指令也会被添加在页面内，当以使用原生的maxlength属性，会有区别：
+	1.ngMaxlength不用设置maxlength属性，因此HTML5约束验证不可用
+	2.该ngMaxlength属性必须是表达式，而最大长度值必须插值
+```
+
+优先级
+
+    此指令的优先级为0
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-maxlength>
+...
+</ng-maxlength>
+```
+
+作为属性：
+
+```
+<ANY>
+...
+</ANY>
+```
+
+ngMinlength
+
+	ngMaxlength是maxlength验证器添加到ngModel。这是最常用的基于文本的输入控件，但也可以运用到自定义文本控件。
+	如果该ngModel，设置了错误的minlength验证程序。如果ngModel.$viewValue的值小于AngularJS中给出的表达式计算后得到的整数ngMinlength属性值。
+
+```
+注：本指令也会被添加在页面内，当以使用原生的minlength属性，会有区别：
+	1.ngMinlength不用设置minlength属性，因此HTML5约束验证不可用
+	2.该ngMinlength属性必须是表达式，而最大长度值必须插值
+```
+
+优先级
+
+    此指令的优先级为0
+
+用法：
+作为元素：(本指令可以作为自定义元素，但是IE会有限制--9+)。 
+```html
+<ng-minlength>
+...
+</ng-minlength>
+```
+
+作为属性：
+
+```html
+<ANY>
+...
+</ANY>
+```
+
+ngModel
+
+	ngModel指令可以绑定到input，select，textarea(或自定义窗体控件)可以作为属性在NgModelController范围内使用，要创建和公开的这项指令。
+
+ngModel的负责项：
+	1.视图绑定到模型中，其他指令，如要求input, textarea，select
+	2.提供验证行为： (i.e. required, number, email, url).
+	3.保持控件的状态(有效/无效，已修改/未修改，触及/未触及，验证错误)。
+	4.元素上设置相关的css类（ng-valid, ng-invalid, ng-dirty, ng-pristine, ng-touched, ng-untouched, ng-empty, ng-not-empty），包括动画
+	5.注册控件与其父窗体
+
+注意：ngModel会尝试在当前作用域中绑定到给定属性值，如果当前作用域中不存在该属性，将会自动创建一个隐藏的属性添加到当前作用域。
+
+如何使用ngModel基本的例子：input(text,checkbox,radio,number,email,url,date,datetime-local,time,month,week),select,textarea.
+
+复杂模型(对象或集合)
+
+	默认情况下，ngModel监听模型，而不是值。这是重要的知识，当输入绑定到模型对象(例如。日期)或集合(例如。 阵列)。如果唯一的属性是对象或集合被更改，ngModel将不会收到通知，所以输入不会呈现出来。
+	在一个重新绘制将发生之前，必须将模型分配一个全新的对象或集合。
+	一些指令选项，将导致他们使用一个$watchCollection元模型表达式
+		- 例如：ngOptions，将在track by子句中时，包含理解表达式，或如果选择多个属性
+	$watchCollection() 方法只做一个浅比较，更改属性的含义深度比较第一级对象(或如果它是一个数组，只改变一个集合中的项的属性)仍将不会触发模型的重新绘制。
+
+CSS classes
+
+	下面的CSS类根据模型的有效性在 input/select/textarea元素上添加和删除关联。
+	    - ng-valid: 该模型是有效的
+	    - ng-invalid: 该模型是有效的
+	    - ng-valid-[key]: 通过 $setValidity 给每一个添加有效的key
+	    - ng-invalid-[key]: 通过 $setValidity 给每一个添加无效的key
+	    - ng-pristine: 控制尚未与之交互
+	    - ng-dirty: 控制与之交互
+	    - ng-touched: 控制已经变得模糊
+	    - ng-untouched: 控制没有模糊
+	    - ng-pending: $asyncValidators 未满足
+	    - ng-empty: 视图不包含一个值或“null”的值,是由ngModel定义。NgModelController提供方法
+	    - ng-not-empty: 视图包含一个非空值
+	 请记住，ngAnimate当添加和移除时，可以检测以上每个类。
+
+Animation Hooks
+
+	当任何关联的CSS类添加和删除时，会在模型内输入元素上触发动画，这是附加到模型上的。这些类包括：.ng-pristine, .ng-dirty, .ng-invalid 和 .ng-valid，以及任何其他验证执行的的模型本身上。
+
+
+
+
+
 
 
     
