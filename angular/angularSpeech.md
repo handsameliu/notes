@@ -2192,6 +2192,7 @@ Animation Hooks
 
 	当任何关联的CSS类添加和删除时，会在模型内输入元素上触发动画，这是附加到模型上的。这些类包括：.ng-pristine, .ng-dirty, .ng-invalid 和 .ng-valid，以及任何其他验证执行的的模型本身上。在ngModel内触发的动画是类似于在ngClass工作方式和动画可以连接并使用CSS转换，以及JS动画的关键帧。
 	下面的示例演示一个简单的方法来利用CSS转换输入元素的样式在它已经过验证后，一直呈现为无效：
+
 ```css
 //be sure to include ngAnimate as a module to hook into more
 //advanced animations
