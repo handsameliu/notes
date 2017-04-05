@@ -76,15 +76,15 @@ Model.distinct(field, conditions, callback);
 
 ```javascript
 Model
-.where('age').gte(25)
-.where('tags').in(['movie', 'music', 'art'])
-.select('name', 'age', 'tags')
-.skip(20)
-.limit(10)
-.asc('age')
-.slaveOk()
-.hint({ age: 1, name: 1 })
-.run(callback);
+	.where('age').gte(25)
+	.where('tags').in(['movie', 'music', 'art'])
+	.select('name', 'age', 'tags')
+	.skip(20)
+	.limit(10)
+	.asc('age')
+	.slaveOk()
+	.hint({ age: 1, name: 1 })
+	.run(callback);
 ```
 
 ### Model.$where
