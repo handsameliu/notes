@@ -1,6 +1,7 @@
 ## mongoose基础知识
-> 参考 http://cnodejs.org/topic/504b4924e2b84515770103dd  版本可能略旧，但是入门是好东西
-> http://www.nodeclass.com/api/mongoose.html   官方文档
+> 参考 http://cnodejs.org/topic/504b4924e2b84515770103dd  版本可能略旧，但是讲的比较细入门是不错的
+> 参考 http://www.nodeclass.com/api/mongoose.html	
+> 参考 http://mongoosejs.com/docs/api.html			
 
 ### 名词解释
 
