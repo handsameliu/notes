@@ -1,4 +1,5 @@
-> http://www.nodeclass.com/api/mongoose.html   官方文档
+> 参考 http://www.nodeclass.com/api/mongoose.html	
+> 参考 http://mongoosejs.com/docs/api.html			
 
 ### Model.find
 
