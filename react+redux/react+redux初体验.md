@@ -26,6 +26,7 @@ export default 变量名;
 ```javascript
 import {connect} from 'react-redux';
 import UI组件 from '../components/UI组件';
+import {init} from '../action/actionName'
 const mapStateToProps=(state)=>{
      return{
         state:state.data
@@ -33,7 +34,7 @@ const mapStateToProps=(state)=>{
 };
 
 const mapDispatchToProps=(dispatch,props)=>{
-    dispatch(initDiaryCard());
+    dispatch(init());							//当页面加载时需要执行方法要加在这里
     return{
 
     }
